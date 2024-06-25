@@ -16,7 +16,7 @@ const msalConfig: Configuration = {
 
 const cca = new ConfidentialClientApplication(msalConfig);
 
-export const getOutlookAuthUrl = async () => {
+export const getOutlookAuthUrl = async (): Promise<string> => {
   const authCodeUrlParameters: AuthorizationUrlRequest = {
     scopes: ['https://graph.microsoft.com/.default'],
     redirectUri: process.env.OUTLOOK_REDIRECT_URI!
@@ -25,7 +25,7 @@ export const getOutlookAuthUrl = async () => {
   return await cca.getAuthCodeUrl(authCodeUrlParameters);
 };
 
-export const setOutlookCredentials = async (code: string) => {
+export const setOutlookCredentials = async (code: string): Promise<string> => {
   const tokenRequest: AuthorizationCodeRequest = {
     code: code,
     scopes: ['https://graph.microsoft.com/.default'],
