@@ -15,9 +15,14 @@ router.get('/auth/gmail/callback', async (req, res) => {
   res.json(tokens);
 });
 
-router.get('/auth/outlook', (req, res) => {
-  const url = getOutlookAuthUrl();
-  res.redirect(url);
+router.get('/auth/outlook', async (req, res) => {
+  try {
+    const url = await getOutlookAuthUrl();
+    res.redirect(url);
+  } catch (error) {
+    console.error('Error getting Outlook auth URL:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 router.get('/auth/outlook/callback', async (req, res) => {
